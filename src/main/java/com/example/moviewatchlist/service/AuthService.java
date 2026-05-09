@@ -3,6 +3,7 @@ package com.example.moviewatchlist.service;
 import com.example.moviewatchlist.dto.AuthResponseDTO;
 import com.example.moviewatchlist.dto.LoginDTO;
 import com.example.moviewatchlist.dto.RegistrationDTO;
+import com.example.moviewatchlist.dto.UserDTO;
 import com.example.moviewatchlist.entity.User;
 import com.example.moviewatchlist.repository.UserRepository;
 import com.example.moviewatchlist.util.JwtUtil;
@@ -21,7 +22,7 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public AuthResponseDTO register(RegistrationDTO req) {
+    public UserDTO register(RegistrationDTO req) {
         if (userRepository.existsByEmail(req.getEmail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
         }
@@ -31,8 +32,11 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(req.getPassword()));
         userRepository.save(user);
 
-        String token = jwtUtil.generateToken(user.getId(), user.getEmail());
-        return new AuthResponseDTO(token);
+        return new UserDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail()
+        );
     }
 
     public AuthResponseDTO login(LoginDTO req) {

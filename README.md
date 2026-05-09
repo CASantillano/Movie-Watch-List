@@ -38,3 +38,23 @@ auth endpoints don't require Jwt bearer token, movies endpoints do
 * DELETE /api/movies/{id}
 ---
 ## Screenshots:
+### Register a user:
+![PostRegister](images/PostRegisterUser.png)
+
+### Login:
+![PostLogin](images/LoginUser.png)
+
+### Post a movie:
+![PostMovie](images/PostMovies.png)
+
+### Get all movies for a user:
+![GetMovies](images/GetMovies.png)
+
+### Get a movie by id for a user:
+![GetMovieById](images/GetMovieById.png)
+
+### Update a movie entry:
+![UpdateMovie](images/UpdateMovie.png)
+
+### Delete a movie entry:
+![DeleteMovie](images/DeleteMovie.png)
