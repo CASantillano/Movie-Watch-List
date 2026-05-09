@@ -42,8 +42,9 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id, Authentication auth) {
+    public ResponseEntity<Void> delete(@PathVariable String id, Authentication auth) {
         String userId = (String) auth.getPrincipal();
         movieService.delete(id, userId);
+        return ResponseEntity.noContent().build();
     }
 }
