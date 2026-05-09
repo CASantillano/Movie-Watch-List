@@ -4,7 +4,9 @@ import com.example.moviewatchlist.dto.MovieDTO;
 import com.example.moviewatchlist.entity.Movie;
 import com.example.moviewatchlist.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,9 +32,9 @@ public class MovieService {
 
     public Movie getById(String id, String userId) {
         Movie movie = movieRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Movie not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found"));
         if (!movie.getUserId().equals(userId)) {
-            throw new RuntimeException("You don't have this movie");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You don't have this movie");
         }
         return movie;
     }

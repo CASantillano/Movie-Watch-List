@@ -7,8 +7,10 @@ import com.example.moviewatchlist.entity.User;
 import com.example.moviewatchlist.repository.UserRepository;
 import com.example.moviewatchlist.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthService {
@@ -21,7 +23,7 @@ public class AuthService {
 
     public AuthResponseDTO register(RegistrationDTO req) {
         if (userRepository.existsByEmail(req.getEmail())) {
-            throw new RuntimeException("Email already registered");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
         }
         User user = new User();
         user.setUsername(req.getUsername());
@@ -35,10 +37,10 @@ public class AuthService {
 
     public AuthResponseDTO login(LoginDTO req) {
         User user = userRepository.findByEmail(req.getEmail())
-                .orElseThrow(()->new RuntimeException("Invalid credentials"));
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
 
         if (!passwordEncoder.matches(req.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
 
         String token = jwtUtil.generateToken(user.getId(), user.getEmail());
