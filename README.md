@@ -12,7 +12,7 @@ JWT authentication, and Docker.
 ### Prerequisites:
 * Java 21
 * Docker Desktop
-* MongoDB running locally on port 27017
+* MongoDB running locally on port 27017(can use net start MongoDB)
 ---
 ### How to build and run:
 Open terminal and run:
@@ -50,8 +50,14 @@ auth endpoints don't require Jwt bearer token, movies endpoints do
 ### Get all movies for a user:
 ![GetMovies](images/GetMovies.png)
 
+### Get all movies w/ no or invlaid token:
+![GetInvalid](images/GetInvalid.png)
+
 ### Get a movie by id for a user:
 ![GetMovieById](images/GetMovieById.png)
+
+### Get movie using nonexistent id:
+![GetNonexistent](images/GetNonexistent.png)
 
 ### Update a movie entry:
 ![UpdateMovie](images/UpdateMovie.png)
